@@ -10,6 +10,5 @@
 
 @interface ViewController : UIViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 
-
 @end
 

@@ -41,7 +41,9 @@
         return;
     }
     
+    // TODO: Use a cache mechanism to void going to the network for the same image twice.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // Flickr wrapps the media url inside a dictionary
         NSString* media = self.item.media[@"m"];
         NSData* data = [[NSData alloc] initWithContentsOfURL:[[NSURL alloc] initWithString:media]];
         
@@ -53,18 +55,6 @@
     
     NSString* title = self.item.title;
     [self.titleLabel setText:title];
-    
-    // Do any additional setup after loading the view from its nib.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

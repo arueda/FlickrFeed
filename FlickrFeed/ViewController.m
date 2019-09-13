@@ -13,9 +13,12 @@
 
 @interface ViewController ()
 
+@property (weak) IBOutlet UIActivityIndicatorView* activityIndicatorView;
+@property (weak) IBOutlet UILabel* pullToRefreshLabel;
+
 @property UIPageViewController* pageController;
 @property NSArray* items;
-@property IBOutlet UIView* activityIndicatorView;
+
 @property FlickrFeed* feed;
 @property CAShapeLayer* shapeLayer;
 
@@ -25,22 +28,32 @@
  @param pageIndex the index of the page to retrieve.
  */
 - (FlickrFeedItemViewController *)viewControllerWithPageIndex:(NSInteger)pageIndex;
+
 /**
  Creates a UIPageViewController and loads it as a childViewController
  
  This method runs on the main thread.
  */
 - (void) attachPageViewController;
+
 /**
  Triggers a Flickr feed refresh
  */
 - (void) refresh;
+
 /**
+ Creates a CALayer that the user can pull to refresh
  */
 - (void) addReloadControl;
 
+/**
+ Invoked when the user pulls to refresh
+ */
+- (void) panGestureDidMove:(UIPanGestureRecognizer*) gesture;
+
 @end
 
+#pragma mark - Implementation
 @implementation ViewController
 
 - (void)viewDidLoad {
@@ -81,22 +94,28 @@
        gesture.state == UIGestureRecognizerStateFailed ||
        gesture.state == UIGestureRecognizerStateCancelled) {
         temp.size.height = 80;
+        [self refresh];
     } else {
         temp.size.height = 80 + MAX([gesture translationInView:self.view].y, 0);
     }
     self.shapeLayer.frame = temp;
     
 }
-     
-     
+
 - (void) refresh {
+    
+    [self.pullToRefreshLabel setHidden:YES];
+    [self.activityIndicatorView startAnimating];
+    // TODO: this makes the screen blink. Fix it.
+    [self.pageController removeFromParentViewController];
     
     [self.feed refreshWithHandler:^(NSArray *items) {
         
         self.items = items;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.activityIndicatorView.hidden = YES;
+            [self.pullToRefreshLabel setHidden:NO];
+            [self.activityIndicatorView stopAnimating];
         });
         
         [self attachPageViewController];
@@ -104,7 +123,6 @@
     }];
     
 }
-    
 
 - (FlickrFeedItemViewController *)viewControllerWithPageIndex:(NSInteger)pageIndex {
     if (pageIndex < 0 || pageIndex >= [self.items count]) {
@@ -118,11 +136,6 @@
     return viewController;
 }
 
-/**
- Creates a UIPageViewController and loads it as a childViewController
- 
- This method runs on the main thread.
- */
 - (void) attachPageViewController {
     
     dispatch_async(dispatch_get_main_queue(), ^{
