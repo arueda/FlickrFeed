@@ -80,12 +80,9 @@
         return nil;
     }
     
-    FlickrFeedItemViewController*  before = [[FlickrFeedItemViewController alloc] initWithNibName:@"FlickrFeedItemViewController" bundle:nil];
+    FlickrFeedItem* item = [[FlickrFeedItem alloc] initWithDictionary:[self.items objectAtIndex:self.index--]];
     
-    FlickrFeedItem* item = [self.items objectAtIndex:self.index];
-    [before setFeedItem:item];
-    
-    self.index -= 1;
+    FlickrFeedItemViewController* before = [[FlickrFeedItemViewController alloc] initWithItem:item];
     
     return before;
     
@@ -97,13 +94,8 @@
         return nil;
     }
     
-    FlickrFeedItemViewController*  after = [[FlickrFeedItemViewController alloc] initWithNibName:nil bundle:nil];
-    
-    
-    FlickrFeedItem* item = [self.items objectAtIndex:self.index];
-    [after setFeedItem:item];
-    
-    self.index += 1;
+    FlickrFeedItem* item = [[FlickrFeedItem alloc] initWithDictionary:[self.items objectAtIndex:self.index++]];
+    FlickrFeedItemViewController* after = [[FlickrFeedItemViewController alloc] initWithItem:item];
     
     return after;
 }

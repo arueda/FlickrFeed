@@ -19,7 +19,7 @@
 - (instancetype) initWithItem:(FlickrFeedItem*)item {
     self = [super initWithNibName:@"FlickrFeedItemViewController" bundle:nil];
     if(self) {
-        
+        _item = item;
     }
     return self;
 }
@@ -30,10 +30,6 @@
     self.titleLabel.text = self.item.title;
     
     // Do any additional setup after loading the view from its nib.
-}
-
--(void) setFeedItem:(FlickrFeedItem*)item {
-    self.item = item;
 }
 
 /*
