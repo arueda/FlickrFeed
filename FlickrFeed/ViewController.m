@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "FlickrFeed.h"
 #import "FlickrFeedItem.h"
 #import "FlickrFeedItemViewController.h"
 
@@ -14,7 +15,14 @@
 
 @property UIPageViewController* pageController;
 @property NSArray* items;
-@property NSUInteger index;
+
+/**
+ Gets a FlickrFeedItemViewController based on the given index
+ 
+ @param pageIndex the index of the page to retrieve.
+ */
+- (FlickrFeedItemViewController *)viewControllerWithPageIndex:(NSInteger)pageIndex;
+- (void) attachPageViewController;
 
 @end
 
@@ -23,81 +31,83 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.index = 0;
     // Do any additional setup after loading the view.
     
-    self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    FlickrFeed* feed = [[FlickrFeed alloc] initWithString:@"https://api.flickr.com/"];
     
-    self.pageController.dataSource = self;
-    [[self.pageController view] setFrame:[[self view] bounds]];
-    
-    UIViewController *initialViewController = [[FlickrFeedItemViewController alloc] initWithNibName:@"FlickrFeedItemViewController" bundle:nil];   
-    
-    
-    NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
-    
-    [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    
-    [self addChildViewController:self.pageController];
-    [[self view] addSubview:[self.pageController view]];
-    [self.pageController didMoveToParentViewController:self];
-    
-    NSURLSessionTask* dataTask = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:@"https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1"] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [feed refreshWithHandler:^(NSArray *items) {
         
-        NSError* serializationError;
-        NSDictionary* feed = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&serializationError];
-        
-        if(serializationError) {
-            NSLog(@"error: %@", serializationError);
-        } else {
-            self.items = [feed objectForKey:@"items"];
-        }
+        self.items = items;
+        [self attachPageViewController];
         
     }];
+}
+
+- (FlickrFeedItemViewController *)viewControllerWithPageIndex:(NSInteger)pageIndex {
+    if (pageIndex < 0 || pageIndex >= [self.items count]) {
+        return nil;
+    }
     
-    [dataTask resume];
+    FlickrFeedItem* item = [[FlickrFeedItem alloc] initWithDictionary:[self.items objectAtIndex:pageIndex]];
+    FlickrFeedItemViewController *viewController = [[FlickrFeedItemViewController alloc] initWithItem:item];
+    viewController.pageIndex = pageIndex;
     
+    return viewController;
+}
+
+/**
+ Creates a UIPageViewController and loads it as a childViewController
+ 
+ This method runs on the main thread.
+ */
+- (void) attachPageViewController {
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+        
+        self.pageController.dataSource = self;
+        [[self.pageController view] setFrame:[[self view] bounds]];
+        
+        UIViewController *initialViewController = [self viewControllerWithPageIndex:0];
+        
+        [self.pageController setViewControllers:@[initialViewController]
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:NO
+                                     completion:nil];
+        
+        [self addChildViewController:self.pageController];
+        [[self view] addSubview:[self.pageController view]];
+        [self.pageController didMoveToParentViewController:self];
+        
+    });
 }
 
 #pragma mark - UIPageViewControllerDelegate
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
-    // The number of items reflected in the page indicator.
     return [self.items count];
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
-    // The selected item reflected in the page indicator.
-    return 0;
+    return [(FlickrFeedItemViewController *)pageViewController.presentedViewController pageIndex];
 }
 
 #pragma mark - UIPageViewControllerDataSource
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
     
-    if (self.index < 0) {
-        return nil;
-    }
-    
-    FlickrFeedItem* item = [[FlickrFeedItem alloc] initWithDictionary:[self.items objectAtIndex:self.index--]];
-    
-    FlickrFeedItemViewController* before = [[FlickrFeedItemViewController alloc] initWithItem:item];
-    
-    return before;
-    
+    FlickrFeedItemViewController *vc = (FlickrFeedItemViewController *)viewController;
+    NSUInteger index = vc.pageIndex;
+    return [self viewControllerWithPageIndex:(index - 1)];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
     
-    if (self.index == [self.items count]) {
-        return nil;
-    }
+    FlickrFeedItemViewController *vc = (FlickrFeedItemViewController *)viewController;
+    NSUInteger index = vc.pageIndex;
+    return [self viewControllerWithPageIndex:(index + 1)];
     
-    FlickrFeedItem* item = [[FlickrFeedItem alloc] initWithDictionary:[self.items objectAtIndex:self.index++]];
-    FlickrFeedItemViewController* after = [[FlickrFeedItemViewController alloc] initWithItem:item];
-    
-    return after;
 }
 
 @end

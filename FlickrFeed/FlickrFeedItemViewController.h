@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (instancetype) initWithItem:(FlickrFeedItem*)item;
 
+@property (assign, nonatomic) NSInteger pageIndex;
+
 @end
 
 NS_ASSUME_NONNULL_END

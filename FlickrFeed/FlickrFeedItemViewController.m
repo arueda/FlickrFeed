@@ -41,8 +41,6 @@
         return;
     }
     
-    NSLog(@"ITEM %@", self.item.description);
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString* media = self.item.media[@"m"];
         NSData* data = [[NSData alloc] initWithContentsOfURL:[[NSURL alloc] initWithString:media]];
