@@ -20,7 +20,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDJ-ii-smy">
                                 <rect key="frame" x="157" y="398" width="100" height="100"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.22352941176470587" green="0.2627450980392157" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="kao-Jz-Zk4"/>
                                     <constraint firstAttribute="width" constant="100" id="zPq-Tf-iIp"/>
@@ -30,11 +30,22 @@
                                 <rect key="frame" x="197" y="438" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pull to refresh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDi-pK-A0L">
+                                <rect key="frame" x="153.5" y="44" width="107" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="1Lz-1E-xeA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="NDJ-ii-smy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1DC-ec-aGu"/>
+                            <constraint firstItem="eDi-pK-A0L" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="BRy-gL-Pvu"/>
                             <constraint firstItem="NDJ-ii-smy" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="DzU-hh-hfo"/>
+                            <constraint firstItem="eDi-pK-A0L" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mBd-gh-Geh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

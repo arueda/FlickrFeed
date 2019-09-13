@@ -64,6 +64,7 @@
                                                        green:67/255.0
                                                         blue:89/255.0
                                                        alpha:1.0] CGColor];
+    self.shapeLayer.zPosition = -1;
     [self.view.layer addSublayer:self.shapeLayer];
     
     UIPanGestureRecognizer* gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self

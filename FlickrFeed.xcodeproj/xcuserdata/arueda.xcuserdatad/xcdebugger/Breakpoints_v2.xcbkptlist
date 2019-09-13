@@ -89,11 +89,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlickrFeed/ViewController.m"
-            timestampString = "590050987.892318"
+            timestampString = "590051339.605345"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "-panGestureDidMove:"
             landmarkType = "7">
          </BreakpointContent>
