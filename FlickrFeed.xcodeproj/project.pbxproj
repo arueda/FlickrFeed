@@ -17,7 +17,6 @@
 		40CB8F2E2329D8710002E083 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 40CB8F2D2329D8710002E083 /* main.m */; };
 		40CB8F382329D8710002E083 /* FlickrFeedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 40CB8F372329D8710002E083 /* FlickrFeedTests.m */; };
 		40CB8F442329F10E0002E083 /* FlickrFeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 40CB8F432329F10E0002E083 /* FlickrFeedItem.m */; };
-		40CB8F472329F21D0002E083 /* FlickrFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 40CB8F462329F21D0002E083 /* FlickrFeed.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,8 +48,6 @@
 		40CB8F392329D8710002E083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40CB8F422329F10E0002E083 /* FlickrFeedItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlickrFeedItem.h; sourceTree = "<group>"; };
 		40CB8F432329F10E0002E083 /* FlickrFeedItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlickrFeedItem.m; sourceTree = "<group>"; };
-		40CB8F452329F21D0002E083 /* FlickrFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlickrFeed.h; sourceTree = "<group>"; };
-		40CB8F462329F21D0002E083 /* FlickrFeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlickrFeed.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +100,6 @@
 				40CB8F2D2329D8710002E083 /* main.m */,
 				40CB8F422329F10E0002E083 /* FlickrFeedItem.h */,
 				40CB8F432329F10E0002E083 /* FlickrFeedItem.m */,
-				40CB8F452329F21D0002E083 /* FlickrFeed.h */,
-				40CB8F462329F21D0002E083 /* FlickrFeed.m */,
 				40B128C0232A7CAC00FF4763 /* FlickrFeedItemViewController.h */,
 				40B128C1232A7CAC00FF4763 /* FlickrFeedItemViewController.m */,
 				40B128C2232A7CAC00FF4763 /* FlickrFeedItemViewController.xib */,
@@ -223,7 +218,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				40CB8F232329D86E0002E083 /* ViewController.m in Sources */,
-				40CB8F472329F21D0002E083 /* FlickrFeed.m in Sources */,
 				40CB8F442329F10E0002E083 /* FlickrFeedItem.m in Sources */,
 				40CB8F2E2329D8710002E083 /* main.m in Sources */,
 				40B128C3232A7CAC00FF4763 /* FlickrFeedItemViewController.m in Sources */,

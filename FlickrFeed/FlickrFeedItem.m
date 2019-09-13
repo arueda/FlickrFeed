@@ -14,8 +14,6 @@
 
 @implementation FlickrFeedItem
 
-@dynamic description;
-
 - (instancetype) initWithDictionary:(NSDictionary*)dictionary {
     self = [super init];
     

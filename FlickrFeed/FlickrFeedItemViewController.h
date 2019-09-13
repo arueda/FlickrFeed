@@ -13,10 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FlickrFeedItemViewController : UIViewController
 
+/**
+ Creates a FlickrFeedItemViewController
+ 
+ @param item A FlickrFeedItem
+ */
 - (instancetype) initWithItem:(FlickrFeedItem*)item;
-
-@property (weak) IBOutlet UILabel* titleLabel;
-@property (weak) IBOutlet UIImageView* imageView;
 
 @end
 
